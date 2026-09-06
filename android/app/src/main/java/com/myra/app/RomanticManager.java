@@ -8,18 +8,13 @@ public class RomanticManager {
     private RomanticMode romanticMode;
 
     public RomanticManager(Context context) {
-
         config = new RomanticConfig(context);
         romanticMode = new RomanticMode();
 
         if (config.isRomanticSaved()) {
-            romanticMode.setMode(
-                    RomanticMode.ModeType.ROMANTIC
-            );
+            romanticMode.setMode(RomanticMode.ModeType.ROMANTIC);
         } else {
-            romanticMode.setMode(
-                    RomanticMode.ModeType.NORMAL
-            );
+            romanticMode.setMode(RomanticMode.ModeType.NORMAL);
         }
     }
 
@@ -27,19 +22,11 @@ public class RomanticManager {
         return romanticMode.isRomantic();
     }
 
-    public void toggleRomanticMode(
-            Context context,
-            boolean enable
-    ) {
-
+    public void toggleRomanticMode(Context context, boolean enable) {
         if (enable) {
-            romanticMode.setMode(
-                    RomanticMode.ModeType.ROMANTIC
-            );
+            romanticMode.setMode(RomanticMode.ModeType.ROMANTIC);
         } else {
-            romanticMode.setMode(
-                    RomanticMode.ModeType.NORMAL
-            );
+            romanticMode.setMode(RomanticMode.ModeType.NORMAL);
         }
 
         config.saveRomanticState(enable);
@@ -76,7 +63,6 @@ public class RomanticManager {
     }
 
     private String getNormalResponse(String input) {
-
         return "Hello! I am Myra AI. How can I assist you today?";
     }
 }
