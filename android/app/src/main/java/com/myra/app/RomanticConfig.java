@@ -6,7 +6,8 @@ import android.content.SharedPreferences;
 public class RomanticConfig {
 
     private static final String PREF_NAME = "MyraRomanticPrefs";
-    private static final String KEY_ROMANTIC_MODE = "is_romantic_enabled";
+    private static final String KEY_ROMANTIC_MODE =
+            "is_romantic_enabled";
 
     private SharedPreferences preferences;
 
@@ -18,12 +19,20 @@ public class RomanticConfig {
     }
 
     public void saveRomanticState(boolean isEnabled) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(KEY_ROMANTIC_MODE, isEnabled);
+
+        SharedPreferences.Editor editor =
+                preferences.edit();
+
+        editor.putBoolean(
+                KEY_ROMANTIC_MODE,
+                isEnabled
+        );
+
         editor.apply();
     }
 
     public boolean isRomanticSaved() {
+
         return preferences.getBoolean(
                 KEY_ROMANTIC_MODE,
                 false
