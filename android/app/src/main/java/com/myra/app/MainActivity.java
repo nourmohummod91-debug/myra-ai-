@@ -23,20 +23,17 @@ public class MainActivity extends Activity {
 
         romanticManager = new RomanticManager(this);
 
-        // Main layout
         LinearLayout mainLayout = new LinearLayout(this);
         mainLayout.setOrientation(LinearLayout.VERTICAL);
         mainLayout.setPadding(20, 20, 20, 20);
         mainLayout.setBackgroundColor(Color.BLACK);
 
-        // Myra icon
         TextView myraIcon = new TextView(this);
         myraIcon.setText("🤖");
         myraIcon.setTextSize(70);
         myraIcon.setGravity(Gravity.CENTER);
         mainLayout.addView(myraIcon);
 
-        // Myra name
         TextView title = new TextView(this);
         title.setText("MYRA");
         title.setTextSize(30);
@@ -46,7 +43,6 @@ public class MainActivity extends Activity {
         title.setPadding(0, 5, 0, 20);
         mainLayout.addView(title);
 
-        // Chat area
         ScrollView scrollView = new ScrollView(this);
 
         chatText = new TextView(this);
@@ -69,19 +65,16 @@ public class MainActivity extends Activity {
 
         mainLayout.addView(scrollView, scrollParams);
 
-        // Message input
         EditText input = new EditText(this);
         input.setHint("Myra-কে কিছু বলো...");
         input.setTextColor(Color.WHITE);
         input.setHintTextColor(Color.GRAY);
         mainLayout.addView(input);
 
-        // Send button
         Button sendButton = new Button(this);
         sendButton.setText("SEND");
         mainLayout.addView(sendButton);
 
-        // Friendly mode button
         Button modeButton = new Button(this);
 
         if (romanticManager.isRomanticActive()) {
@@ -92,7 +85,6 @@ public class MainActivity extends Activity {
 
         mainLayout.addView(modeButton);
 
-        // Send message
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +115,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        // Friendly mode
         modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +135,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        // Show app
         setContentView(mainLayout);
     }
 }
