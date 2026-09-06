@@ -23,20 +23,20 @@ public class MainActivity extends Activity {
 
         romanticManager = new RomanticManager(this);
 
+        // Main layout
         LinearLayout mainLayout = new LinearLayout(this);
         mainLayout.setOrientation(LinearLayout.VERTICAL);
         mainLayout.setPadding(20, 20, 20, 20);
         mainLayout.setBackgroundColor(Color.BLACK);
 
-        // MYRA ICON
+        // Myra icon
         TextView myraIcon = new TextView(this);
         myraIcon.setText("🤖");
         myraIcon.setTextSize(70);
         myraIcon.setGravity(Gravity.CENTER);
-
         mainLayout.addView(myraIcon);
 
-        // MYRA NAME
+        // Myra name
         TextView title = new TextView(this);
         title.setText("MYRA");
         title.setTextSize(30);
@@ -44,15 +44,14 @@ public class MainActivity extends Activity {
         title.setTextColor(Color.WHITE);
         title.setGravity(Gravity.CENTER);
         title.setPadding(0, 5, 0, 20);
-
         mainLayout.addView(title);
 
-        // CHAT AREA
+        // Chat area
         ScrollView scrollView = new ScrollView(this);
 
         chatText = new TextView(this);
         chatText.setText(
-                "Myra: Hello! আমি Myra। 😊\n\n" +
+                "Myra: Hello! I am Myra. 😊\n\n" +
                 "আমাকে কিছু লিখে পাঠাও।"
         );
         chatText.setTextSize(18);
@@ -70,21 +69,19 @@ public class MainActivity extends Activity {
 
         mainLayout.addView(scrollView, scrollParams);
 
-        // INPUT
+        // Message input
         EditText input = new EditText(this);
         input.setHint("Myra-কে কিছু বলো...");
         input.setTextColor(Color.WHITE);
         input.setHintTextColor(Color.GRAY);
-
         mainLayout.addView(input);
 
-        // SEND BUTTON
+        // Send button
         Button sendButton = new Button(this);
         sendButton.setText("SEND");
-
         mainLayout.addView(sendButton);
 
-        // FRIENDLY MODE
+        // Friendly mode button
         Button modeButton = new Button(this);
 
         if (romanticManager.isRomanticActive()) {
@@ -95,7 +92,7 @@ public class MainActivity extends Activity {
 
         mainLayout.addView(modeButton);
 
-        // SEND ACTION
+        // Send message
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +123,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        // MODE ACTION
+        // Friendly mode
         modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +144,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        // Show app
         setContentView(mainLayout);
     }
 }
