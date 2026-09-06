@@ -3,15 +3,19 @@ package com.myra.app;
 import android.app.Activity;
 import android.os.Bundle;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
     private RomanticManager romanticManager;
+    private TextView chatText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,31 +23,111 @@ public class MainActivity extends Activity {
 
         romanticManager = new RomanticManager(this);
 
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.CENTER);
-        layout.setPadding(30, 30, 30, 30);
-        layout.setBackgroundColor(Color.BLACK);
+        LinearLayout mainLayout = new LinearLayout(this);
+        mainLayout.setOrientation(LinearLayout.VERTICAL);
+        mainLayout.setPadding(20, 20, 20, 20);
+        mainLayout.setBackgroundColor(Color.BLACK);
 
-        TextView textView = new TextView(this);
-        textView.setText("MYRA\n\nYour AI Assistant");
-        textView.setTextSize(26);
-        textView.setTextColor(Color.WHITE);
-        textView.setGravity(Gravity.CENTER);
+        // MYRA ICON
+        TextView myraIcon = new TextView(this);
+        myraIcon.setText("🤖");
+        myraIcon.setTextSize(70);
+        myraIcon.setGravity(Gravity.CENTER);
 
-        layout.addView(textView);
+        mainLayout.addView(myraIcon);
 
-        Button romanticButton = new Button(this);
+        // MYRA NAME
+        TextView title = new TextView(this);
+        title.setText("MYRA");
+        title.setTextSize(30);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.WHITE);
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 5, 0, 20);
+
+        mainLayout.addView(title);
+
+        // CHAT AREA
+        ScrollView scrollView = new ScrollView(this);
+
+        chatText = new TextView(this);
+        chatText.setText(
+                "Myra: Hello! আমি Myra। 😊\n\n" +
+                "আমাকে কিছু লিখে পাঠাও।"
+        );
+        chatText.setTextSize(18);
+        chatText.setTextColor(Color.WHITE);
+        chatText.setPadding(15, 15, 15, 15);
+
+        scrollView.addView(chatText);
+
+        LinearLayout.LayoutParams scrollParams =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                );
+
+        mainLayout.addView(scrollView, scrollParams);
+
+        // INPUT
+        EditText input = new EditText(this);
+        input.setHint("Myra-কে কিছু বলো...");
+        input.setTextColor(Color.WHITE);
+        input.setHintTextColor(Color.GRAY);
+
+        mainLayout.addView(input);
+
+        // SEND BUTTON
+        Button sendButton = new Button(this);
+        sendButton.setText("SEND");
+
+        mainLayout.addView(sendButton);
+
+        // FRIENDLY MODE
+        Button modeButton = new Button(this);
 
         if (romanticManager.isRomanticActive()) {
-            romanticButton.setText("Friendly Mode: ON");
+            modeButton.setText("Friendly Mode: ON");
         } else {
-            romanticButton.setText("Friendly Mode: OFF");
+            modeButton.setText("Friendly Mode: OFF");
         }
 
-        layout.addView(romanticButton);
+        mainLayout.addView(modeButton);
 
-        romanticButton.setOnClickListener(new View.OnClickListener() {
+        // SEND ACTION
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String userMessage =
+                        input.getText().toString().trim();
+
+                if (userMessage.isEmpty()) {
+                    return;
+                }
+
+                String response =
+                        romanticManager.getResponse(userMessage);
+
+                chatText.append(
+                        "\n\nYou: " + userMessage +
+                        "\nMyra: " + response
+                );
+
+                input.setText("");
+
+                scrollView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollView.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
+            }
+        });
+
+        // MODE ACTION
+        modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -56,19 +140,13 @@ public class MainActivity extends Activity {
                 );
 
                 if (newState) {
-                    romanticButton.setText("Friendly Mode: ON");
-                    textView.setText(
-                            "MYRA\n\nFriendly Mode Active"
-                    );
+                    modeButton.setText("Friendly Mode: ON");
                 } else {
-                    romanticButton.setText("Friendly Mode: OFF");
-                    textView.setText(
-                            "MYRA\n\nYour AI Assistant"
-                    );
+                    modeButton.setText("Friendly Mode: OFF");
                 }
             }
         });
 
-        setContentView(layout);
+        setContentView(mainLayout);
     }
 }
